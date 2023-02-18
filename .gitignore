@@ -1,0 +1,8 @@
+.idea
+__pycache__
+# folder data & checkpoint 
+models/exps/
+# temp file
+testing_lib*.py
+p2p_project
+extract*
