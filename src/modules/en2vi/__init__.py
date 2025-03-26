@@ -8,23 +8,17 @@ from .cmu2vi import cmu2vi
 
 ############################### ENGLISH DICTIONARY #################################
 dict_en_chars        = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/characters.json"), "r"))
-dict_en_words        = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/words.json"), "r"))
 dict_en_common_words = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/common_words.json"), "r"))
+dict_en_common_words.update(json.load(open(os.path.join(os.path.dirname(__file__), "dicts/verified_words.json"), "r"))) # add verified english words to common_words (no need to change code)
+dict_en_words        = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/words.json"), "r"))
 dict_en_words.update(dict_en_common_words.copy())
-for dict_name in glob.glob(os.path.join(os.path.dirname(__file__), "dicts//static/*.json")):
+for dict_name in glob.glob(os.path.join(os.path.dirname(__file__), "dicts/static/*.json")):
     dict_en_words.update(json.load(open(dict_name, "r")))
-
-### news domain site ###
-dict_domain_en_words = {}
-for domain in glob.glob(os.path.join(os.path.dirname(__file__), "dicts/domain/*.json")):
-    dict_domain_en_words[os.path.basename(domain).split(".")[0]] = dict_en_common_words.copy()
-    dict_domain_en_words[os.path.basename(domain).split(".")[0]].update(json.load(open(domain, "r")))
 dict_confuse_words  = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/confuse.json"), "r"))
-
-reading_prefixes     = {"un":"ăn", "in":"in", "im":"im", "il":"i", "ir":"i", "dis":"đít", "non":"non", "over":"âu-vờ", "super":"súp-pơ", "re":"ri", "mis":"mít", "pre":"pờ-ri", "mono":"mon-nơ", "bi":"bai", "tri":"trai", "multi":"măn-ti"}
-reading_suffixes     = {"dom":"đừm", "ment":"mừn", "ness":"nớt", "sion":"sừn", "tion":"sừn", "ship":"síp", "ful":"phu", "less":"lớt", "ly":"ly", "ward":"guốt", "wards":"guốt", "wise":"goai", "ty":"ty", "fy":"phai"}
+reading_prefixes     = {"un":"ăn", "in":"in", "im":"im", "il":"i", "ir":"i", "dis":"đít", "non":"năn", "over":"âu-vờ", "super":"súp-pơ", "re":"ri", "mis":"mít", "pre":"pờ-ri", "mono":"mô-nô", "bi":"bi", "tri":"tri", "multi":"mu-ti"}
+reading_suffixes     = {"dom":"đừm", "ment":"mừn", "ness":"nít", "sion":"sừn", "tion":"sừn", "ship":"síp", "ful":"phu", "less":"lớt", "ly":"ly", "ward":"guốt", "wards":"guốt", "wise":"goai", "ty":"ty", "fy":"phai"}
 reading_v_suffixes   = {"acy":"ơ-si", "ance":"ừn-sờ", "ence":"ừn-sờ", "ity":"i-ty", "al":"ồ", "or":"ờ", "ist":"ít", "ism":"i-sừm", "ate":"ết", "en":"ừn", "ify":"i-phai", "ise":"ai", "ize":"ai", "able":"ơ-bồ", "ible":"ơ-bồ", "esque":"ét-cờ", "ive":"íp", "ic":"ích", "ical":"i-cồ", "ious":"ợt", "ous":"ớt", "ish":"ít"}
-####################################################################################
+##############################################################################0######
 ####################################################################################
 
 

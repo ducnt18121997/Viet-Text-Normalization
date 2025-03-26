@@ -1,39 +1,59 @@
-# Normalize-text for TTS
-## 1. Active Flow
+<div align="center">
 
-```flow
- - Step 0: Preprocessing (xử lý trường hợp gây lỗi)
- - Step 1: Text Segmentation (open source: vncorenlp)
- - Step 2: Text Normalize turn 1 
- - Step 3: Parse NSWs
- - Step 4: Text Normalize turn 2 
+# Text Normalization System - Regrex Implementation
+
+This is Python Implementation based on Regrex & Rule-based for convert writing words to reading words, researched and developed by ducnt2.
+
+[![python](https://img.shields.io/badge/-Python_3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3815/)
+[![regrex](https://img.shields.io/badge/-regrex_2.2.1-grey?logo=pypi&logoColor=white)](https://pypi.org/project/regex/)
+
+</div>
+
+
+<h1> 1. Installation </h1>
+
+```
+conda create --name venv python=3.8
+pip install -r requirements.txt
 ```
 
-## 2. Run
+<h1> 2. Running </h1>
+
+**2.1. Function Description**
 
 ```bash
-    $ python api.py --checkpoint /path/to/classify/models --port port_number
-```
-
-## 3. Function
-
-```bash
-    src/__init__.py: Chứa class TextNormalizer biểu diễn 5 bước theo flow của text normalize
-    models/: folder chứa model, dữ liệu và hàm training cho mô hình classify text normalize
-```
-```bash
-    src/config.py: Chứa json được load từ folder src/dicts
-    src/letter2vi.py: Hàm đọc các NSWs dạng chữ (bao gồm 3 dạng: UPPER, lower/Capitalize và MiX)
-    src/number2vi.py: Hàm phân loại NSWs dạng số (bao gồm 5 dạng: TIM, DAY, MON, NUM và DIG)
-    src/en2vi.py: Hàm đọc tiếng anh
+src/normalizer.py: Chứa class TextNormalizer biểu diễn 3 bước theo flow của text normalize
 ```
 
 ```bash
-    src/modules/: Chứ các hàm biểu biểu diễn cách đọc cho từng loại NSW cụ thể
-    src/modules/build_en2vi.py: Hàm xây dựng từ điển đọc tiếng anh
+src/config.py: Chứa json được load từ folder src/dicts
+src/regrex.py: Chứa các hàm normalize bằng regrex
+src/rule.py: Chứa các hàm normalize bằng rules (cho những case NSWs còn lại)
+src/en2vi.py: Hàm đọc tiếng anh
 ```
-## 4. Từ điển
+
 ```bash
-    src/dicts/: Chứa từ điển tiếng việt
-    src/modules/en2vi/dicts: Chứa các từ điên tiếng anh
+src/modules/: Chứ các hàm biểu biểu diễn cách đọc cho từng loại NSW cụ thể
+src/modules/build_en2vi.py: Hàm xây dựng từ điển đọc tiếng anh
 ```
+
+**2.1. Dictionary Description**
+
+```bash
+src/dicts/: Chứa các bộ từ điển tiếng việt
+src/modules/en2vi/dicts: Chứa các bộ từ điển tiếng anh
+```
+
+**2.1. API Function**
+
+```bash
+# use when no-java environment
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+python api.py 
+    --vncorenlp /absolute_path_vn_corenlp_model
+    --port /port_number
+```
+
+<h1> 3. Documentation </h1>
+
+See [Detail Documentation](https://docs.google.com/document/d/1r5tIlGK-BxnBGWNE0Hi7SM6Kw1lIAczCC1zV5c36iL4/edit?usp=sharing)

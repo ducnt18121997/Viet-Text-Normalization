@@ -1,9 +1,10 @@
 {
-	"TP": "thành phố", 
-	"TT": "thị trấn",
-	"TX": "thị xã", 
-	"Q" : "quận", 
-	"P" : "phường",
-	"H" : "huyện", 
-	"X" : "xã"
+    "H": "huyện",
+    "KP": "khu phố",
+    "P": "phường",
+    "Q": "quận",
+    "TP": "thành phố",
+    "TT": "thị trấn",
+    "TX": "thị xã",
+    "X": "xã"
 }

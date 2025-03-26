@@ -1,25 +1,22 @@
 """
-\t** \033[92mpre_process condition \033[0m *     :
-\t** \033[94mfirst_normalize condition \033[0m * :
-\t** \033[93mclassify number \033[0m             : 
-\t** \033[96msecond_normalize condition \033[0m *: 
-\t** \033[92men2vi function (dict) \033[0m       :
-\t** \033[92men2vi function (lematize) \033[0m   :
-\t** \033[92men2vi function (ipa2vi) \033[0m     :
-\t** \033[92men2vi function (dict) \033[0m       :
-\t** \033[91m Errors en2vi \033[0m               :
-\t** \033[91m pre_process condition  \033[0m     :
-\t** \033[91m mix unit check  \033[0m            :
+1. Những ngân hàng đang có lãi suất cho vay bình quân cao như Liên Việt, Bản Việt, Kiên Long với lãi suất từ 8,07 $ -  8,94$...
+2. Từ lâu công viên 30/4 đã trở thành nơi lý tưởng để giới trẻ, du khách chụp ảnh, nhâm nhi ly cà phê hay ngồi dưới tán cây trò chuyện tránh những ngày nắng nóng. Công viên 23-9 nằm giữa hai con đường Lê Lai và Phạm Ngũ Lão, trải dài từ công trường Quách Thị Trang đến đường Nguyễn Trãi. Công viên gồm 3 khu và bị ngăn cách nhau bởi đường Nguyễn Thị Nghĩa.
+3. Bộ Quốc phòng Nga đồng thời tuyên bố hệ thống phòng không Nga đã bắn hạ 46 máy bay không người lái của Ukraine, một tên lửa ATACMS và 8 quả bom thông minh Hammer trong 24 giờ qua.
+4. Lấy cảm hứng từ chiếc xe quan tài Dracula xuất hiện trong tập phim năm 1965 của series phim truyền hình The Munsters. Do chủ quan nên không hoạt động. Do 2 tháng
+5. Lãnh đạo Sở GD-ĐT TP.HCM cho biết về nguyên tắc xét điểm chuẩn lớp 10 trường, lớp chuyên như sau: Chỉ xét tuyển đối với thí sinh tham dự đủ các bài thi quy định, không vi phạm nội quy trong kỳ thi tuyển sinh và các bài thi đều đạt điểm lớn hơn 2.
 """
 import time
+import json
 from src import TextNormalizer
+
 
 
 if __name__ == "__main__":
     tik             = time.time()
-    text_normalizer = TextNormalizer("models/new_classifier/models/weights.pt", "src/vncorenlp/VnCoreNLP-1.1.1.jar")
-    text_inputs     = "HLV Park Hang-seo sẽ không rời Việt Nam lâu, ít nhất là trong vài tháng tới. Theo tờ Newsis, ông sẽ trở về Hàn Quốc vào ngày 14/2 tới nhưng sau đó 2 ngày đã đáp chuyến bay trở lại Việt Nam."
-    print(f"[*] take {time.time} seconds")
+    text_normalizer = TextNormalizer("/data/tts/tts-normalization/src/models/vncorenlp/")
+    
+    print(f"[*] take {time.time() - tik} seconds")
+    text_inputs     = "Lãnh đạo Sở GD-ĐT TP.HCM cho biết về nguyên tắc xét điểm chuẩn lớp 10 trường, lớp chuyên như sau: Chỉ xét tuyển đối với thí sinh tham dự đủ các bài thi quy định, không vi phạm nội quy trong kỳ thi tuyển sinh và các bài thi đều đạt điểm lớn hơn 2."
     print(text_inputs)
     print("==")
-    print(text_normalizer.normalize(text_inputs))
+    print(json.dumps(text_normalizer(text_inputs), ensure_ascii=False, indent=4))

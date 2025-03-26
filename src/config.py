@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import glob
 import json
 
 
@@ -66,41 +65,39 @@ re_punc              = re_punc_read + "|" + re_punc_dura
 list_vn_words       = open(os.path.join(os.path.dirname(__file__), "dicts/words.txt"), "r", encoding="utf8").read().split("\n")
 dict_vn_chars       = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/characters.json"), "r"))
 dict_vn_words       = dict.fromkeys(list_vn_words, 0)
-special_vnwords     = {
+dict_spec_words     = {
     "đắk": "đắc", "lắk": "lắc", "kạn": "cạn", "pưh": "pưn", "plông": "pờ lông", "kar": "car",
     "grai": "gờ rai", "búk": "búc", "păh": "păn", "jút": "giút", "kông": "công", "glong": "gờ long",
-    "mil": "min", "chro": "chờ ro", "ayun": "ay un", "huoai": "hoai", "drai": "đờ rai",
+    "mil": "min", "chro": "chờ ro", "ayun": "ay un", "huoai": "hoai", "drai": "đờ rai", "v.v": "vân vân",
     "kbang": "cờ bang", "prông": "pờ rông", "pleiku": "pờ lây cu", "tẻh": "tẻn", "krông": "cờ rông",
     "kon": "con", "kuin": "cu in", "đrắk": "đờ rắc", "đăk": "đắc", "glei": "gờ lây", "mpú": "mờ pú"
 }
 list_vn_pronouns    = ["cụ", "ông", "bà", "bác", "cô", "chú", "anh", "chị", "em", "cháu", "bé"]
 dict_vn_location    = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/location.json"), "r"))
+list_vn_location    = tuple([f"{w}." for w in dict_vn_location.keys()])
 dict_artist         = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/artist.json"), "r"))
 dict_loan_words     = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/loan.json"), "r"))
 dict_website_name   = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/website.json"), "r"))
-dict_website_domain = {"com": "com", "vn": "vi-en", "org": "o-rờ-gờ", "net": "nét", "site": "sai", "top": "tốp"}
+dict_website_domain = {
+    "com": "com", "vn": "vi-en", "org": "o-rờ-gờ", "net": "nét", "site": "sai", "top": "tốp", "tv": "tê-vê",
+    "today": "tu-đây", "dev": "đép"
+}
+list_website_domain = tuple([f".{w}" for w in dict_website_domain.keys()])
 dict_mix_words      = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/mix.json"), "r"))
 dict_bank           = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/static/bank.json"), "r"))
 
 ####################################################################################
 ############################### UNITS DICTIONARY ###################################
 ####################################################################################
-dict_time_unit      = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/unit/time.json"), "r"))
-dict_numb_unit      = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/unit/number.json"), "r"))
+dict_base_unit      = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/unit/base.json"), "r"))
+list_base_unit      = tuple(sorted(list(dict_base_unit.keys()), key=lambda x: len(x), reverse=True))
 dict_currency_unit  = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/unit/currency.json"), "r"))
-dict_numb_unit.update(dict_currency_unit)
 
 ####################################################################################
 ############################### ABB DICTIONARY #####################################
 ####################################################################################
+dict_exception_abb  = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/abb/exception.json"), "r"))
 dict_mono_abb       = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/abb/mono.json"), "r"))
-for key, value in dict_mono_abb.items():
-    dict_mono_abb[key] = value.split(",")[0]
-dict_double_abb     = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/abb/duo.json"), "r"))
-### news domain site ###
-dict_abb_domain     = {}
-for domain in glob.glob("dicts/abb/domain/*.json"):
-    dict_abb_domain[os.path.basename(domain).split(".")[0]] = dict_mono_abb.copy()
-    dict_abb_domain[os.path.basename(domain).split(".")[0]].update(json.load(open(domain, "r")))
-
+dict_duo_abb        = json.load(open(os.path.join(os.path.dirname(__file__), "dicts/abb/duo.json"), "r"))
+list_start_duo_abb  = [x.split("#")[0] for x in dict_duo_abb.keys()]
 ####################################################################################

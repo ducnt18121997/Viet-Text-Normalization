@@ -1,8 +1,14 @@
 .idea
+.env
+.vscode
 __pycache__
 # folder data & checkpoint 
+data/
+logs/
 models/exps/
+src/models/vinai.xphonebert
 # temp file
 testing_lib*.py
 p2p_project
 extract*
+testing_lib*.py
