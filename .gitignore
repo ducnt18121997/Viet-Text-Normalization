@@ -1,6 +1,7 @@
 .idea
 .env
 .vscode
+.venv
 __pycache__
 # folder data & checkpoint 
 data/

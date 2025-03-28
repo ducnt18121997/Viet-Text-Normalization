@@ -64,14 +64,14 @@ class SymbolCharset:
     PATH = os.path.join(THIS_DIR, "dicts/static/symbol.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Symbol ###
-    SYMBOL = tuple(READER.keys())
+    SYMBOL = list(READER.keys())
 
 
 class PunctuationCharset:
     PATH = os.path.join(THIS_DIR, "dicts/static/punctuation.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Punctuation ###
-    PUNCTUATION = tuple(READER.keys())
+    PUNCTUATION = list(READER.keys())
     ### Special ###
     SKIP = ["'", """, """, """, """, "*", "…", ")", "]", "}", "~", "`", "_"]
     SILENT = [".", ",", ";", "!", "-", "?", ":", "(", "[", "{"]
@@ -83,11 +83,29 @@ class UnitCharset:
     PATH = os.path.join(THIS_DIR, "dicts/unit/base.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Unit ###
-    UNIT = tuple(sorted(list(READER.keys()), key=lambda x: len(x), reverse=True))
+    UNIT = list(sorted(list(READER.keys()), key=lambda x: len(x), reverse=True))
 
 
 class CurrencyCharset:
     PATH = os.path.join(THIS_DIR, "dicts/unit/currency.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Currency ###
-    CURRENCY = tuple(READER.keys())
+    CURRENCY = list(READER.keys())
+
+
+class RomanCharset:
+    READER = {
+        "I": 1,
+        "V": 5,
+        "X": 10,
+        "L": 50,
+        "C": 100,
+        "D": 500,
+        "M": 1000,
+        "IV": 4,
+        "IX": 9,
+        "XL": 40,
+        "XC": 90,
+        "CD": 400,
+        "CM": 900,
+    }

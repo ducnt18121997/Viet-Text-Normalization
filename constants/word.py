@@ -61,28 +61,28 @@ class VietnameseLocation:
     PATH = os.path.join(THIS_DIR, "dicts/static/location.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Location ###
-    LOCATION = tuple(READER.keys())
+    LOCATION = list(READER.keys())
 
 
 class VietnameseArtist:
     PATH = os.path.join(THIS_DIR, "dicts/static/artist.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Artist ###
-    ARTIST = tuple(READER.keys())
+    ARTIST = list(READER.keys())
 
 
 class VietnameseLoanWord:
     PATH = os.path.join(THIS_DIR, "dicts/static/loan.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Loan Word ###
-    LOAN_WORD = tuple(READER.keys())
+    LOAN_WORD = list(READER.keys())
 
 
 class VietnameseWebsite:
     PATH = os.path.join(THIS_DIR, "dicts/static/website.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Website ###
-    WEBSITE = tuple(READER.keys())
+    WEBSITE = list(READER.keys())
     DOMAIN = {
         "com": "com",
         "vn": "vi-en",
@@ -100,27 +100,27 @@ class VietnameseMixWord:
     PATH = os.path.join(THIS_DIR, "dicts/static/mix.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Mix Word ###
-    MIX_WORD = tuple(READER.keys())
+    MIX_WORD = list(READER.keys())
 
 
 class VietnameseBank:
     PATH = os.path.join(THIS_DIR, "dicts/static/bank.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Bank ###
-    BANK = tuple(READER.keys())
+    BANK = list(READER.keys())
 
 
 class VietnameseAbbreviation:
     PATH = os.path.join(THIS_DIR, "dicts/static/")
     ### Vietnamese Abbreviation ###
-    ModuleNotFoundError_ABBREVIATION = tuple(
+    SINGLE_ABBREVIATION = list(
         open(os.path.join(PATH, "mono.txt"), "r", encoding="utf8").read().split("\n")
     )
-    DUO_ABBREVIATION = tuple(
+    DOUBLE_ABBREVIATION = list(
         open(os.path.join(PATH, "duo.txt"), "r", encoding="utf8").read().split("\n")
     )
-    START_DUO_ABBREVIATION = [x.split("#")[0] for x in DUO_ABBREVIATION]
-    EXCEPTION_ABBREVIATION = tuple(
+    START_DOUBLE_ABBREVIATION = [x.split("#")[0] for x in DOUBLE_ABBREVIATION]
+    EXCEPTION_ABBREVIATION = list(
         open(os.path.join(PATH, "exception.txt"), "r", encoding="utf8")
         .read()
         .split("\n")

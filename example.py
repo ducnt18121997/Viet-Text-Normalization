@@ -5,18 +5,20 @@
 4. Lấy cảm hứng từ chiếc xe quan tài Dracula xuất hiện trong tập phim năm 1965 của series phim truyền hình The Munsters. Do chủ quan nên không hoạt động. Do 2 tháng
 5. Lãnh đạo Sở GD-ĐT TP.HCM cho biết về nguyên tắc xét điểm chuẩn lớp 10 trường, lớp chuyên như sau: Chỉ xét tuyển đối với thí sinh tham dự đủ các bài thi quy định, không vi phạm nội quy trong kỳ thi tuyển sinh và các bài thi đều đạt điểm lớn hơn 2.
 """
+
 import time
 import json
 from src import TextNormalizer
 
 
-
 if __name__ == "__main__":
-    tik             = time.time()
-    text_normalizer = TextNormalizer("/data/tts/tts-normalization/src/models/vncorenlp/")
-    
+    tik = time.time()
+    text_normalizer = TextNormalizer(
+        "/data/tts/tts-normalization/src/models/vncorenlp/"
+    )
+
     print(f"[*] take {time.time() - tik} seconds")
-    text_inputs     = "Lãnh đạo Sở GD-ĐT TP.HCM cho biết về nguyên tắc xét điểm chuẩn lớp 10 trường, lớp chuyên như sau: Chỉ xét tuyển đối với thí sinh tham dự đủ các bài thi quy định, không vi phạm nội quy trong kỳ thi tuyển sinh và các bài thi đều đạt điểm lớn hơn 2."
+    text_inputs = "Lãnh đạo Sở GD-ĐT TP.HCM cho biết về nguyên tắc xét điểm chuẩn lớp 10 trường, lớp chuyên như sau: Chỉ xét tuyển đối với thí sinh tham dự đủ các bài thi quy định, không vi phạm nội quy trong kỳ thi tuyển sinh và các bài thi đều đạt điểm lớn hơn 2."
     print(text_inputs)
     print("==")
     print(json.dumps(text_normalizer(text_inputs), ensure_ascii=False, indent=4))

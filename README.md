@@ -2,7 +2,7 @@
 
 # Text Normalization System - Regrex Implementation
 
-This is Python Implementation based on Regrex & Rule-based for convert writing words to reading words, researched and developed by ducnt2.
+This is Python Implementation based on Regrex & Rule-based for convert writing words to reading words, researched and developed by Dean Ng.
 
 [![python](https://img.shields.io/badge/-Python_3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3815/)
 [![regrex](https://img.shields.io/badge/-regrex_2.2.1-grey?logo=pypi&logoColor=white)](https://pypi.org/project/regex/)
