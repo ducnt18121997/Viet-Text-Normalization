@@ -111,17 +111,15 @@ class VietnameseBank:
 
 
 class VietnameseAbbreviation:
-    PATH = os.path.join(THIS_DIR, "dicts/static/")
+    PATH = os.path.join(THIS_DIR, "dicts/abb/")
     ### Vietnamese Abbreviation ###
     SINGLE_ABBREVIATION = list(
-        open(os.path.join(PATH, "mono.txt"), "r", encoding="utf8").read().split("\n")
+        json.load(open(os.path.join(PATH, "single.json"), "r", encoding="utf8"))
     )
     DOUBLE_ABBREVIATION = list(
-        open(os.path.join(PATH, "duo.txt"), "r", encoding="utf8").read().split("\n")
+        json.load(open(os.path.join(PATH, "double.json"), "r", encoding="utf8"))
     )
     START_DOUBLE_ABBREVIATION = [x.split("#")[0] for x in DOUBLE_ABBREVIATION]
     EXCEPTION_ABBREVIATION = list(
-        open(os.path.join(PATH, "exception.txt"), "r", encoding="utf8")
-        .read()
-        .split("\n")
+        json.load(open(os.path.join(PATH, "exception.json"), "r", encoding="utf8"))
     )

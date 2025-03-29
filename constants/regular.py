@@ -18,7 +18,7 @@ class PunctuationRegular:
 
 
 class SymbolRegular:
-    REGEX_SYMBOL = "|".join(list(SymbolCharset.DICT_SYMBOL.keys()))
+    REGEX_SYMBOL = "|".join(list(SymbolCharset.SYMBOL))
 
 
 class WebsiteRegular:

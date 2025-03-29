@@ -2,7 +2,6 @@ import unidecode
 import unicodedata
 from num2words import num2words
 from utils.helper import get_separator, split_num_word, is_number
-from cores.reader import NumberReader
 from constants import charset, word
 
 
@@ -55,11 +54,14 @@ class NumberReader:
         """Đọc số la mã"""
         i, ostring = 0, 0
         while i < len(istring):
-            if i + 1 < len(istring) and istring[i : i + 2] in RomanCharset.READER:
-                ostring += RomanCharset.READER[istring[i : i + 2]]
+            if (
+                i + 1 < len(istring)
+                and istring[i : i + 2] in charset.RomanCharset.READER
+            ):
+                ostring += charset.RomanCharset.READER[istring[i : i + 2]]
                 i += 2
             else:
-                ostring += RomanCharset.READER[istring[i]]
+                ostring += charset.RomanCharset.READER[istring[i]]
                 i += 1
 
         return NumberReader.small_number(str(ostring))

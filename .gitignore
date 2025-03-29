@@ -6,6 +6,7 @@ __pycache__
 # folder data & checkpoint 
 data/
 logs/
+exp/
 models/exps/
 src/models/vinai.xphonebert
 # temp file

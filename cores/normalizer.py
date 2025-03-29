@@ -29,7 +29,11 @@ class TextNormalizer:
 
         self._whitespace_re = re.compile(r"\s+")
         if not os.path.exists(vncorenlp_path):
-            raise FileNotFoundError(f"VnCoreNLP path not found: {vncorenlp_path}")
+            from py_vncorenlp import download_model
+
+            os.makedirs(vncorenlp_path, exist_ok=True)
+            download_model(save_dir=os.path.abspath(vncorenlp_path))
+
         self.rdrsegmenter = VnCoreNLP(save_dir=vncorenlp_path, annotators=["wseg"])
 
     # Bước 1: Xử lý các vấn đề liên quan đến encode hoặc các trường hợp gây lỗi khi tokenize bởi VncoreNLP

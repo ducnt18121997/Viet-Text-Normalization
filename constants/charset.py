@@ -76,7 +76,10 @@ class PunctuationCharset:
     SKIP = ["'", """, """, """, """, "*", "…", ")", "]", "}", "~", "`", "_"]
     SILENT = [".", ",", ";", "!", "-", "?", ":", "(", "[", "{"]
     DURATION = SKIP + SILENT
-    READ = [punc for punc in PUNCTUATION if punc not in DURATION]
+    READ = []
+    for punc in PUNCTUATION:
+        if punc not in DURATION:
+            READ.append(punc)
 
 
 class UnitCharset:
