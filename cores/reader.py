@@ -1,3 +1,4 @@
+import re
 import unidecode
 import unicodedata
 import constants
@@ -56,12 +57,12 @@ class NumberReader:
         while i < len(istring):
             if (
                 i + 1 < len(istring)
-                and istring[i : i + 2] in charset.RomanCharset.READER
+                and istring[i : i + 2] in constants.RomanCharset.READER
             ):
-                ostring += charset.RomanCharset.READER[istring[i : i + 2]]
+                ostring += constants.RomanCharset.READER[istring[i : i + 2]]
                 i += 2
             else:
-                ostring += charset.RomanCharset.READER[istring[i]]
+                ostring += constants.RomanCharset.READER[istring[i]]
                 i += 1
 
         return NumberReader.small_number(str(ostring))
