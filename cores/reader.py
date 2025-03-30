@@ -1,8 +1,8 @@
 import unidecode
 import unicodedata
+import constants
 from num2words import num2words
 from utils.helper import get_separator, split_num_word, is_number
-from constants import charset, word
 
 
 class NumberReader:
@@ -120,7 +120,7 @@ class NumberReader:
                 _string = istring.split("/")
                 ostring = " trên ".join([NumberReader.number(x) for x in _string])
         else:
-            ostring += NumberReader.number(istring)
+            ostring += NumberReader.small_number(istring)
 
         return ostring
 
@@ -230,18 +230,15 @@ class WordReader:
         # đọc từ điển mapping từ viết tất
         if (
             use_dictionary is True
-            and istring in word.VietnameseAbbreviation.SINGLE_ABBREVIATION
+            and istring in constants.VietnameseAbbreviation.SINGLE_ABBREVIATION
         ):
-            ostring = word.VietnameseAbbreviation.SINGLE_ABBREVIATION[istring]
+            ostring = constants.VietnameseAbbreviation.SINGLE_ABBREVIATION[istring]
         # đọc từ điển mapping từ viết hoa đọc bình thường
-        elif istring in word.VietnameseAbbreviation.DOUBLE_ABBREVIATION:
-            ostring = word.VietnameseAbbreviation.DOUBLE_ABBREVIATION[istring]
+        elif istring in constants.VietnameseAbbreviation.DOUBLE_ABBREVIATION:
+            ostring = constants.VietnameseAbbreviation.DOUBLE_ABBREVIATION[istring]
         # đọc theo tiếng việt
-        elif istring.lower() in word.VietnameseWord.WORDS:
+        elif istring.lower() in constants.VietnameseWord.WORDS:
             ostring = istring.lower()
-        # đọc theo từ tiếng anh thông dụng
-        elif istring.lower() in word.VietnameseWord.DICT_EN_COMMON_WORDS:
-            ostring = word.VietnameseWord.DICT_EN_COMMON_WORDS[istring.lower()]
         elif "." in istring:
             istring = unidecode.unidecode(istring).replace(".", " ").strip().split()
             ostring = " ".join([WordReader.upper(s) for s in istring])
@@ -254,9 +251,9 @@ class WordReader:
             ):
                 ostring = " ".join(
                     [
-                        word.VietnameseWord.DICT_VN_CHARS[ch]
+                        constants.VietnameseCharset.READER[ch]
                         for ch in istring
-                        if ch in word.VietnameseWord.DICT_VN_CHARS
+                        if ch in constants.VietnameseCharset.READER
                     ]
                 )
             else:
@@ -308,12 +305,12 @@ class WordReader:
                 ostring = " trên ".join(
                     NumberReader.number(_str) for _str in _string if _str
                 )
-        elif istring[-1] in charset.CurrencyCharset.CURRENCY:
-            ostring = f"{NumberReader.number(istring[: -1])} {charset.CurrencyCharset.READER[istring[-1]]}"
-        elif istring[0] in charset.CurrencyCharset.CURRENCY:
-            ostring = f"{NumberReader.number(istring[1: ])} {charset.CurrencyCharset.READER[istring[0]]}"
-        elif istring in charset.CurrencyCharset.CURRENCY:
-            ostring = charset.CurrencyCharset.READER[istring]
+        elif istring[-1] in constants.CurrencyCharset.CURRENCY:
+            ostring = f"{NumberReader.number(istring[: -1])} {constants.CurrencyCharset.READER[istring[-1]]}"
+        elif istring[0] in constants.CurrencyCharset.CURRENCY:
+            ostring = f"{NumberReader.number(istring[1: ])} {constants.CurrencyCharset.READER[istring[0]]}"
+        elif istring in constants.CurrencyCharset.CURRENCY:
+            ostring = constants.CurrencyCharset.READER[istring]
         else:
             _string = split_num_word(istring).split()
             ostring = []
@@ -322,7 +319,7 @@ class WordReader:
                     ostring.append(
                         NumberReader.number(x) if x[0] != "0" else NumberReader.digit(x)
                     )
-                elif x.lower() in word.VietnameseWord.WORDS:
+                elif x.lower() in constants.VietnameseWord.WORDS:
                     ostring.append(x.lower())
                 elif x.isupper():
                     ostring.append(WordReader.upper(x, use_dictionary=False))

@@ -1,7 +1,6 @@
 import os
 import re
 import string
-import unidecode
 import unicodedata
 import constants
 from loguru import logger
@@ -80,11 +79,11 @@ class TextNormalizer:
         return out_txts
 
     # Bước 3: Chuẩn hóa văn bản bằng luật
-    def normalize(self, in_txts: List, news_dict: Dict = []) -> str:
+    def normalize(self, in_txts: List) -> str:
         if isinstance(in_txts, str):
             in_txts = in_txts.split()
+
         out_txts = []
-        print(in_txts)
         for idx, word in enumerate(in_txts):
             if word is None:
                 continue
@@ -107,7 +106,7 @@ class TextNormalizer:
                     )
                 out_txts.append(explained_word)
             elif word.lower() in constants.VietnameseWord.WORDS:
-                explained_word = constants.VietnameseWord.WORDS[word.lower()]
+                explained_word = word.lower()
                 # print(f"\t** {display_colors.PURPLE} đọc từ điển cố định (spec word) {display_colors.ENDC}: {word} -> {explained_word}")
                 out_txts.append(explained_word)
             # Xử lý với các từ điển artist/bank/loan/mix/symbol/website/currency
@@ -153,18 +152,18 @@ class TextNormalizer:
                 explained_word = constants.VietnameseWebsite.READER[word.lower()]
                 # print(f"\t** {display_colors.PURPLE} đọc từ điển cố định (website) {display_colors.ENDC}: {word} -> {explained_word}")
                 out_txts.append(explained_word)
-            elif word.endswith(constants.VietnameseWebsite.DOMAIN):
+            elif word.endswith(tuple(constants.VietnameseWebsite.DOMAIN)):
                 explained_word = self.normalize(word.replace(".", " chấm "))[0]
                 # print(f"\t** {display_colors.PURPLE} đọc từ điển cố định (website) {display_colors.ENDC}: {word} -> {explained_word}")
                 out_txts.append(explained_word)
-            elif word in constants.VietnameseCurrency.CURRENCY:
-                explained_word = constants.VietnameseCurrency.READER[word]
+            elif word in constants.CurrencyCharset.CURRENCY:
+                explained_word = constants.CurrencyCharset.READER[word]
                 # print(f"\t** {display_colors.PURPLE} đọc từ điển cố định (currency) {display_colors.ENDC}: {word} -> {explained_word}")
                 out_txts.append(explained_word)
             elif is_short_name(word):
                 explained_word = reader.WordReader.upper(word)
                 out_txts.append(explained_word)
-            elif word.startswith(constants.VietnameseLocation.LOCATION):
+            elif word.startswith(tuple(constants.VietnameseLocation.LOCATION)):
                 spitted_word = [w for w in word.split(".") if w]
                 explained_word = [constants.VietnameseLocation.READER[spitted_word[0]]]
                 if len(spitted_word) != 1:
@@ -240,57 +239,8 @@ class TextNormalizer:
                             in_txts[idx + 1 + i] = None
                     else:
                         explained_word = reader.WordReader.upper(word)
-                # Xử lý theo thứ tự ưu tiên: từ điển động | từ điển cố định | đọc từng từ theo tiếng việt
-                elif word in news_dict:
-                    explained_word = news_dict[word]
                 else:
-                    # Build từ điển động
-                    is_added = False
-                    if (
-                        len(word) < idx < len(in_txts) - 1
-                        and in_txts[idx - 1] == "("
-                        and in_txts[idx + 1] == ")"
-                        and all(
-                            w is not None
-                            for w in in_txts[idx - len(word) - 1 : idx - 1]
-                        )
-                    ):
-                        explained_word = unidecode.unidecode(
-                            "".join(
-                                [w[0] for w in in_txts[idx - len(word) - 1 : idx - 1]]
-                            )
-                        )
-                        if explained_word.upper() == word and all(
-                            w.lower() in constants.VietnameseWord.WORDS
-                            for w in in_txts[idx - len(word) - 1 : idx - 1]
-                        ):
-                            news_dict[word] = " ".join(
-                                in_txts[idx - len(word) - 1 : idx - 1]
-                            ).lower()
-                            is_added = True
-                    explained_word = (
-                        reader.WordReader.upper(word) if is_added is False else ""
-                    )
-                    try:
-                        if self.logger is not None:
-                            if self.db_logger is not None:
-                                if word not in self.db_logger:
-                                    self.db_logger[word] = {
-                                        "read": explained_word.replace(" ", "_"),
-                                        "count": 1,
-                                    }
-                                    self.logger.info(
-                                        f"\t {word} -> {explained_word.replace(' ', '_')}"
-                                    )
-                                else:
-                                    self.db_logger[word]["read"] = (
-                                        explained_word.replace(" ", "_")
-                                    )
-                                    self.db_logger[word]["count"] += 1
-                    except:
-                        pass
-                # if explained_word != word.lower():
-                # print(f"\t** {display_colors.YELLOW} đọc định dạng viết hoa {display_colors.ENDC}: {word} -> {explained_word}")
+                    explained_word = reader.WordReader.upper(word)
                 out_txts.append(explained_word)
             # Xử lý với tù định dạng [lower] / [Capitalizer]
             elif word.islower() or (word[0].isupper() and word[1:].islower()):
@@ -342,19 +292,17 @@ class TextNormalizer:
                 out_txts.append(explained_word)
         out_txts = " ".join(out_txts)
 
-        return re.sub(self._whitespace_re, " ", out_txts).strip(), news_dict
+        return re.sub(self._whitespace_re, " ", out_txts).strip()
 
-    def __call__(self, itexts: str, auto_dict: Dict = {}) -> List:
-        otexts = []  # audo_dict là từ điển động được xây dựng cho riêng từng bài báo
+    def __call__(self, itexts: str) -> List[str]:
+        otexts = []
         for line in self.pre_process(unicodedata.normalize("NFC", itexts)).split("\n"):
             if not line:
                 continue
             line = self.tokenize(line)
             for sentence in line:
                 sentence = sentence.replace("T T&T T", "TT&TT")
-                sentence, auto_dict = self.normalize(
-                    sentence.replace("_", " "), auto_dict
-                )
+                sentence = self.normalize(sentence.replace("_", " "))
                 otexts.append(sentence)
 
-        return otexts, auto_dict
+        return otexts

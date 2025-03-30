@@ -61,7 +61,7 @@ class VietnameseLocation:
     PATH = os.path.join(THIS_DIR, "dicts/static/location.json")
     READER = json.load(open(PATH, "r", encoding="utf8"))
     ### Vietnamese Location ###
-    LOCATION = list(READER.keys())
+    LOCATION = [f"{w}." for w in READER.keys()]
 
 
 class VietnameseArtist:
@@ -113,11 +113,11 @@ class VietnameseBank:
 class VietnameseAbbreviation:
     PATH = os.path.join(THIS_DIR, "dicts/abb/")
     ### Vietnamese Abbreviation ###
-    SINGLE_ABBREVIATION = list(
-        json.load(open(os.path.join(PATH, "single.json"), "r", encoding="utf8"))
+    SINGLE_ABBREVIATION = json.load(
+        open(os.path.join(PATH, "single.json"), "r", encoding="utf8")
     )
-    DOUBLE_ABBREVIATION = list(
-        json.load(open(os.path.join(PATH, "double.json"), "r", encoding="utf8"))
+    DOUBLE_ABBREVIATION = json.load(
+        open(os.path.join(PATH, "double.json"), "r", encoding="utf8")
     )
     START_DOUBLE_ABBREVIATION = [x.split("#")[0] for x in DOUBLE_ABBREVIATION]
     EXCEPTION_ABBREVIATION = list(
