@@ -6,9 +6,8 @@ __pycache__
 # folder data & checkpoint 
 data/
 logs/
-exp/
-models/exps/
-src/models/vinai.xphonebert
+exps/
+
 # temp file
 testing_lib*.py
 p2p_project

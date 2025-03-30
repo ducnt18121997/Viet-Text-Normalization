@@ -19,9 +19,7 @@ TEST_TEXTS = [
 
 if __name__ == "__main__":
     tik = time.time()
-    text_normalizer = TextNormalizer(
-        "D:/Works/PublicReposibility/text-normalization/exp/vncorenlp/"
-    )
+    text_normalizer = TextNormalizer("./exps/vncorenlp/")
     print(f"[*] take {time.time() - tik} seconds to load model")
     tik = time.time()
     for text_inputs in TEST_TEXTS:

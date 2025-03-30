@@ -27,6 +27,7 @@ class TextNormalizer:
         self.db_logger = None
 
         self._whitespace_re = re.compile(r"\s+")
+        vncorenlp_path = os.path.abspath(vncorenlp_path)
         if not os.path.exists(vncorenlp_path):
             from py_vncorenlp import download_model
 
