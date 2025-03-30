@@ -60,6 +60,8 @@ text-normalization/
 ```
 
 ## Reference
+> NOTE: I may forgot repo that I use to reference for this repo, please create issue ticket and I will update it. Thank you very much
+
 - [VnCoreNLP: A Vietnamese Natural Language Processing Toolkit](https://aclanthology.org/N18-5012/) (Vu et al., NAACL 2018)
 - [Vinorm: A Vietnamese Text Normalizer](https://github.com/v-nhandt21/Vinorm) (Nhan et al., 2021)
 
