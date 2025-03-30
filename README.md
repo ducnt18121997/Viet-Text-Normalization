@@ -10,50 +10,68 @@ This is Python Implementation based on Regrex & Rule-based for convert writing w
 </div>
 
 
-<h1> 1. Installation </h1>
+## Features
 
-```
+- Vietnamese text normalization
+- Special character handling
+- Number and currency normalization
+- Date format normalization
+- Support for superscript and subscript characters
+- Complex text pattern recognition
+- Unit and currency handling
+- Roman numeral processing
+
+## Installation
+
+
+```bash
 conda create --name venv python=3.8
 pip install -r requirements.txt
 ```
 
-<h1> 2. Running </h1>
+3. Set up Java environment (required for VnCoreNLP):
+- Install Java JDK (version 21 or compatible)
+- Set JAVA_HOME environment variable to your JDK installation path
 
-**2.1. Function Description**
+## Usage
 
-```bash
-src/normalizer.py: Chứa class TextNormalizer biểu diễn 3 bước theo flow của text normalize
+```python
+from cores.normalizer import TextNormalizer
+
+# Initialize the normalizer with VnCoreNLP model path
+text_normalizer = TextNormalizer("./exps/vncorenlp/")
+
+# Normalize text
+text = "1. Những ngân hàng đang có lãi suất cho vay bình quân cao như Liên Việt, Bản Việt, Kiên Long với lãi suất từ 8,07 $ -  8,94$..."
+normalized_text = text_normalizer(text)
 ```
 
-```bash
-src/config.py: Chứa json được load từ folder src/dicts
-src/regrex.py: Chứa các hàm normalize bằng regrex
-src/rule.py: Chứa các hàm normalize bằng rules (cho những case NSWs còn lại)
-src/en2vi.py: Hàm đọc tiếng anh
+## Project Structure
+
+```
+text-normalization/
+├── constants/         # Character sets and constants
+├── cores/            # Core normalization logic
+├── exps/             # Experiment configurations
+├── logs/             # Log files
+├── utils/            # Utility functions
+├── example.py        # Usage examples
+└── requirements.txt  # Project dependencies
 ```
 
-```bash
-src/modules/: Chứ các hàm biểu biểu diễn cách đọc cho từng loại NSW cụ thể
-src/modules/build_en2vi.py: Hàm xây dựng từ điển đọc tiếng anh
+## Reference
+- [VnCoreNLP: A Vietnamese Natural Language Processing Toolkit](https://aclanthology.org/N18-5012/) (Vu et al., NAACL 2018)
+- [Vinorm: A Vietnamese Text Normalizer](https://github.com/v-nhandt21/Vinorm) (Nhan et al., 2021)
+
+## Cite
+If you find this repository useful for your research, please cite:
+```bibtex
+@misc{deanng_2025,
+    author = {Dean Nguyen},
+    title = {Vietnamese Text Normalization},
+    year = {2025},
+    publisher = {GitHub},
+    journal = {GitHub repository},
+    howpublished = {\url{https://github.com/ducnt18121997/text-normalization}}
+}
 ```
-
-**2.1. Dictionary Description**
-
-```bash
-src/dicts/: Chứa các bộ từ điển tiếng việt
-src/modules/en2vi/dicts: Chứa các bộ từ điển tiếng anh
-```
-
-**2.1. API Function**
-
-```bash
-# use when no-java environment
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
-python api.py 
-    --vncorenlp /absolute_path_vn_corenlp_model
-    --port /port_number
-```
-
-<h1> 3. Documentation </h1>
-
-See [Detail Documentation](https://docs.google.com/document/d/1r5tIlGK-BxnBGWNE0Hi7SM6Kw1lIAczCC1zV5c36iL4/edit?usp=sharing)
